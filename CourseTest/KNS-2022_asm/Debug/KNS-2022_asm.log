@@ -1,0 +1,21 @@
+﻿Сборка начата 18.12.2022 23:54:08.
+Уровень детализации журнала: Normal.     1>Проект "C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\KNS-2022_asm\KNS-2022_asm.vcxproj" в узле 2 (целевые объекты Build).
+     1>InitializeBuildStatus:
+         Создание "Debug\KNS-2022_asm.tlog\unsuccessfulbuild", так как было задано "AlwaysCreate".
+       _MASM:
+         Assembling KNS.asm...
+         cmd.exe /C "C:\Users\noname\AppData\Local\Temp\tmpd63e7651331a4f81ae78a9115dd914be.cmd"
+         ml.exe /c /nologo /Zi /Fo"Debug\KNS.obj" /Fl"Debug\\" /W3 /errorReport:prompt  /TaKNS.asm
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\HostX86\x86\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\Debug\KNS-2022_asm.exe" /INCREMENTAL /ILK:"Debug\KNS-2022_asm.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\Debug\KNS-2022_asm.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\Debug\KNS-2022_asm.lib" /MACHINE:X86 Debug\KNS.obj
+         KNS-2022_asm.vcxproj -> C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\Debug\KNS-2022_asm.exe
+       FinalizeBuildStatus:
+         Файл "Debug\KNS-2022_asm.tlog\unsuccessfulbuild" удаляется.
+         Обращение к "Debug\KNS-2022_asm.tlog\KNS-2022_asm.lastbuildstate".
+     1>Сборка проекта "C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\KNS-2022_asm\KNS-2022_asm.vcxproj" завершена (целевые объекты Build).
+
+Сборка успешно завершена.
+    Предупреждений: 0
+    Ошибок: 0
+
+Прошло времени 00:00:01.74

@@ -1,0 +1,389 @@
+Microsoft (R) Macro Assembler Version 14.29.30142.1	    12/18/22 23:54:08
+KNS.asm							     Page 1 - 1
+
+
+				.586							; система команд (процессор Pentium)
+				.model flat, stdcall			; модель памяти, соглашение о вызовах
+				includelib kernel32.lib			; компановщику: компоновать с kernel32
+				includelib libucrt.lib			; для UCRT - universal C Run-Time library
+
+				ExitProcess PROTO: DWORD		; прототип функции для завершения процесса Windows
+
+				;-----------Standart functions-----------
+				includelib C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\Debug\StandartLibrary.lib
+				cat1 PROTO : DWORD, : DWORD
+				cat2 PROTO : DWORD, : DWORD, : DWORD
+				print PROTO : DWORD
+				printint PROTO : DWORD
+				printcurrenttime PROTO
+				printcurrentdate PROTO
+				printerror PROTO
+				;----------------------------------------
+
+				.stack 4096
+
+				;---------------Literals---------------
+ 00000000			.const
+
+ 00000000 00000008		L6	sdword	8	 ; int literal
+ 00000004 0000000C		L8	sdword	12	 ; int literal
+ 00000008 00000003		L9	sdword	3	 ; int literal
+ 0000000C 0000000A		L10	sdword	10	 ; int literal
+ 00000010 0000000E		L11	sdword	14	 ; int literal
+ 00000014 00000004		L12	sdword	4	 ; int literal
+ 00000018 00000009		L13	sdword	9	 ; int literal
+ 0000001C 0000000F		L14	sdword	15	 ; int literal
+ 00000020 00000014		L15	sdword	20	 ; int literal
+ 00000024 00000001		L29	sdword	1	 ; int literal
+ 00000028 62 6F 6F 2C 00	L32	byte	"boo,", 0
+ 0000002D 00000001		L35	sdword	1	 ; bool literal
+ 00000031 00000000		L36	sdword	0	 ; bool literal
+ 00000035 00000010		L37	sdword	16	 ; int literal
+ 00000039 0000000D		L38	sdword	13	 ; int literal
+ 0000003D 74 65 73 74 74	L39	byte	"testtext1", 0
+	   65 78 74 31 00
+ 00000047 74 65 73 74 74	L40	byte	"testtext2", 0
+	   65 78 74 32 00
+ 00000051 63 6F 6E 63 61	L41	byte	"concat", 0
+	   74 00
+ 00000058 62 6F 6F 6C 20	L42	byte	"bool op", 0
+	   6F 70 00
+ 00000060 66 69 72 73 74	L43	byte	"firstofarray", 0
+	   6F 66 61 72 72
+	   61 79 00
+ 0000006D 00000000		L44	sdword	0	 ; int literal
+ 00000071 00000007		L45	sdword	7	 ; int literal
+ 00000075 6D 61 78 6F 66	L46	byte	"maxofarray", 0
+	   61 72 72 61 79
+	   00
+ 00000080 64 61 74 65 00	L49	byte	"date", 0
+				;--------------------------------------------
+
+
+				;----------------Variables-------------------
+ 00000000			.data
+
+ 00000000 00000000		x	sdword	0	 ; int variable
+ 00000004 00000000		y	sdword	0	 ; int variable
+ 00000008 00000000		z	sdword	0	 ; int variable
+ 0000000C 00000000		k	sdword	0	 ; int variable
+ 00000010 00000000		m	sdword	0	 ; int variable
+ 00000014 00000000		l	sdword	0	 ; int variable
+ 00000018  000000FF [		sa	byte	255 dup(0)	 ; string variable
+	    00
+	   ]
+ 00000117  000000FF [		sb	byte	255 dup(0)	 ; string variable
+	    00
+	   ]
+ 00000216  000000FF [		sc	byte	255 dup(0)	 ; string variable
+	    00
+	   ]
+ 00000315 00000000		bfs	sdword	0	 ; bool variable
+ 00000319 00000000		bte	sdword	0	 ; bool variable
+ 0000031D  000000FF [		saySomethingboo	byte	255 dup(0)	 ; string variable
+	    00
+	   ]
+ 0000041C 00000000		sumsadc	sdword	0	 ; int variable
+ 00000420 0000000C		myArray sdword 12, 3, 10, 14, 4, 9, 15, 20
+	   00000003
+	   0000000A
+	   0000000E
+	   00000004
+	   00000009
+	   0000000F
+	   00000014
+ 00000440  000000FF [		tmp1 byte 255 dup(0)
+	    00
+	   ]
+				;--------------------------------------------
+
+				;----------------Functions-------------------
+
+ 00000000			.code
+
+ 00000000			f_sum PROC suma : sdword, sumb : sdword
+
+ 00000003  FF 75 08		push suma
+ 00000006  FF 75 0C		push sumb
+ 00000009  58			pop eax
+ 0000000A  5B			pop ebx
+ 0000000B  03 C3		add eax, ebx
+ 0000000D  50			push eax
+ 0000000E  8F 05 0000041C R	pop sumsadc
+ 00000014  A1 00000024 R	mov eax, L29
+					ret
+ 0000001D			f_sum endp
+
+
+ 0000001D			f_saySomething PROC saySomethingmyname : sdword
+
+ 00000020  68 00000028 R	push offset L32
+ 00000025  8B 7D 08		mov edi, saySomethingmyname
+ 00000028  57			push edi
+ 00000029  68 00000440 R	push offset tmp1
+ 0000002E  E8 00000000 E	call cat2
+ 00000033  68 00000440 R	push offset tmp1
+ 00000038  68 0000031D R	push offset saySomethingboo
+ 0000003D  E8 00000000 E	call cat1
+ 00000042  68 0000031D R	push offset saySomethingboo
+ 00000047  E8 00000000 E	call print
+ 0000004C  A1 00000024 R	mov eax, L29
+					ret
+ 00000055			f_saySomething endp
+
+
+ 00000055			f_Reverse PROC Reversev : sdword
+
+ 00000058  A1 0000002D R	mov eax, L35
+ 0000005D  3B 45 08		cmp eax, Reversev
+ 00000060  75 09		jne condition_end
+ 00000062  A1 00000031 R	mov eax, L36
+					ret
+ 0000006B			condition_end: 
+ 0000006B  A1 0000002D R	mov eax, L35
+					ret
+ 00000074			f_Reverse endp
+
+
+ 00000074			main PROC
+
+ 00000074  FF 35 00000035 R	push L37
+ 0000007A  8F 05 00000000 R	pop x
+ 00000080  FF 35 00000000 R	push x
+ 00000086  E8 00000000 E	call printint
+ 0000008B  FF 35 00000008 R	push z
+ 00000091  E8 00000000 E	call printint
+ 00000096  FF 35 00000039 R	push L38
+ 0000009C  8F 05 00000004 R	pop y
+ 000000A2  FF 35 00000004 R	push y
+ 000000A8  E8 00000000 E	call printint
+ 000000AD  FF 35 00000000 R	push x
+ 000000B3  FF 35 00000004 R	push y
+ 000000B9  E8 FFFFFF42		call f_sum
+ 000000BE  50			push eax
+ 000000BF  8F 05 00000014 R	pop l
+ 000000C5  FF 35 00000014 R	push l
+ 000000CB  E8 00000000 E	call printint
+ 000000D0  FF 35 00000000 R	push x
+ 000000D6  FF 35 00000004 R	push y
+ 000000DC  58			pop eax
+ 000000DD  5B			pop ebx
+ 000000DE  F7 E3		mul ebx
+ 000000E0  50			push eax
+ 000000E1  FF 35 00000000 R	push x
+ 000000E7  FF 35 00000004 R	push y
+ 000000ED  E8 FFFFFF0E		call f_sum
+ 000000F2  50			push eax
+ 000000F3  FF 35 00000014 R	push l
+ 000000F9  FF 35 00000024 R	push L29
+ 000000FF  5B			pop ebx
+ 00000100  58			pop eax
+ 00000101  2B C3		sub eax, ebx
+ 00000103  83 F8 00		cmp eax,0
+ 00000106  0F 8C 0000019D	jl inend
+ 0000010C  50			push eax
+ 0000010D  5B			pop ebx
+ 0000010E  58			pop eax
+ 0000010F  2B C3		sub eax, ebx
+ 00000111  83 F8 00		cmp eax,0
+ 00000114  0F 8C 0000018F	jl inend
+ 0000011A  50			push eax
+ 0000011B  FF 35 00000024 R	push L29
+ 00000121  58			pop eax
+ 00000122  5B			pop ebx
+ 00000123  F7 F3		div ebx
+ 00000125  50			push eax
+ 00000126  5B			pop ebx
+ 00000127  58			pop eax
+ 00000128  2B C3		sub eax, ebx
+ 0000012A  83 F8 00		cmp eax,0
+ 0000012D  0F 8C 00000176	jl inend
+ 00000133  50			push eax
+ 00000134  8F 05 00000008 R	pop z
+ 0000013A  FF 35 00000008 R	push z
+ 00000140  E8 00000000 E	call printint
+ 00000145  68 0000003D R	push offset L39
+ 0000014A  68 00000018 R	push offset sa
+ 0000014F  E8 00000000 E	call cat1
+ 00000154  68 00000047 R	push offset L40
+ 00000159  68 00000117 R	push offset sb
+ 0000015E  E8 00000000 E	call cat1
+ 00000163  68 00000051 R	push offset L41
+ 00000168  E8 00000000 E	call print
+ 0000016D  68 00000018 R	push offset sa
+ 00000172  68 00000117 R	push offset sb
+ 00000177  68 00000440 R	push offset tmp1
+ 0000017C  E8 00000000 E	call cat2
+ 00000181  68 00000440 R	push offset tmp1
+ 00000186  68 00000216 R	push offset sc
+ 0000018B  E8 00000000 E	call cat1
+ 00000190  68 00000216 R	push offset sc
+ 00000195  E8 00000000 E	call print
+ 0000019A  68 00000018 R	push offset sa
+ 0000019F  E8 FFFFFE79		call f_saySomething
+ 000001A4  50			push eax
+ 000001A5  8F 05 00000000 R	pop x
+ 000001AB  FF 35 00000031 R	push L36
+ 000001B1  8F 05 00000315 R	pop bfs
+ 000001B7  FF 35 00000315 R	push bfs
+ 000001BD  E8 FFFFFE93		call f_Reverse
+ 000001C2  50			push eax
+ 000001C3  8F 05 00000319 R	pop bte
+ 000001C9  68 00000058 R	push offset L42
+ 000001CE  E8 00000000 E	call print
+ 000001D3  FF 35 00000319 R	push bte
+ 000001D9  E8 00000000 E	call printint
+ 000001DE  68 00000060 R	push offset L43
+ 000001E3  E8 00000000 E	call print
+ 000001E8  FF 35 00000420 R	push myArray[4*0]
+ 000001EE  E8 00000000 E	call printint
+ 000001F3  FF 35 0000006D R	push L44
+ 000001F9  8F 05 0000000C R	pop k
+ 000001FF  FF 35 00000420 R	push myArray[4*0]
+ 00000205  8F 05 00000010 R	pop m
+ 0000020B			while_start: 
+ 0000020B  A1 00000071 R	mov eax, L45
+ 00000210  3B 05 0000000C R	cmp eax, k
+ 00000216  72 41		jb while_end
+ 00000218  8B 35 0000000C R	mov esi, k
+ 0000021E  8B 04 B5		mov eax, myArray[4*esi]
+	   00000420 R
+ 00000225  3B 05 00000010 R	cmp eax, m
+ 0000022B  76 13		jbe condition_end
+ 0000022D  8B 35 0000000C R	mov esi, k
+ 00000233  FF 34 B5		push myArray[4*esi]
+	   00000420 R
+ 0000023A  8F 05 00000010 R	pop m
+ 00000240			condition_end: 
+ 00000240  FF 35 0000000C R	push k
+ 00000246  FF 35 00000024 R	push L29
+ 0000024C  58			pop eax
+ 0000024D  5B			pop ebx
+ 0000024E  03 C3		add eax, ebx
+ 00000250  50			push eax
+ 00000251  8F 05 0000000C R	pop k
+ 00000257  EB B2		jmp while_start
+ 00000259			while_end: 
+ 00000259  68 00000075 R	push offset L46
+ 0000025E  E8 00000000 E	call print
+ 00000263  FF 35 00000010 R	push m
+ 00000269  E8 00000000 E	call printint
+ 0000026E  E8 00000000 E	call printcurrenttime
+ 00000273  50			push eax
+ 00000274  8F 05 00000000 R	pop x
+ 0000027A  E8 00000000 E	call printcurrenttime
+ 0000027F  50			push eax
+ 00000280  8F 05 00000000 R	pop x
+ 00000286  68 00000080 R	push offset L49
+ 0000028B  E8 00000000 E	call print
+ 00000290  E8 00000000 E	call printcurrentdate
+ 00000295  50			push eax
+ 00000296  8F 05 00000000 R	pop x
+ 0000029C  A1 0000006D R	mov eax, L44
+ 000002A1  C3				ret
+				invoke ExitProcess, 0
+ 000002A9			inend:
+ 000002A9  E8 00000000 E	call printerror
+				invoke ExitProcess, 1
+ 000002B5			main ENDP
+				end main
+				;----------------------------------------------
+Microsoft (R) Macro Assembler Version 14.29.30142.1	    12/18/22 23:54:08
+KNS.asm							     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+CONST  . . . . . . . . . . . . .	32 Bit	 00000085 Para	  Public  'CONST'	 ReadOnly
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 0000053F Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000002B5 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+cat1 . . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+cat2 . . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+f_Reverse  . . . . . . . . . . .	P Near	 00000055 _TEXT	Length= 0000001F Public STDCALL
+  Reversev . . . . . . . . . . .	DWord	 bp + 00000008
+  condition_end  . . . . . . . .	L Near	 0000006B _TEXT	
+f_saySomething . . . . . . . . .	P Near	 0000001D _TEXT	Length= 00000038 Public STDCALL
+  saySomethingmyname . . . . . .	DWord	 bp + 00000008
+f_sum  . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000001D Public STDCALL
+  suma . . . . . . . . . . . . .	DWord	 bp + 00000008
+  sumb . . . . . . . . . . . . .	DWord	 bp + 0000000C
+main . . . . . . . . . . . . . .	P Near	 00000074 _TEXT	Length= 00000241 Public STDCALL
+  while_start  . . . . . . . . .	L Near	 0000020B _TEXT	
+  condition_end  . . . . . . . .	L Near	 00000240 _TEXT	
+  while_end  . . . . . . . . . .	L Near	 00000259 _TEXT	
+  inend  . . . . . . . . . . . .	L Near	 000002A9 _TEXT	
+printcurrentdate . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+printcurrenttime . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+printerror . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+printint . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+print  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+L10  . . . . . . . . . . . . . .	DWord	 0000000C CONST	
+L11  . . . . . . . . . . . . . .	DWord	 00000010 CONST	
+L12  . . . . . . . . . . . . . .	DWord	 00000014 CONST	
+L13  . . . . . . . . . . . . . .	DWord	 00000018 CONST	
+L14  . . . . . . . . . . . . . .	DWord	 0000001C CONST	
+L15  . . . . . . . . . . . . . .	DWord	 00000020 CONST	
+L29  . . . . . . . . . . . . . .	DWord	 00000024 CONST	
+L32  . . . . . . . . . . . . . .	Byte	 00000028 CONST	
+L35  . . . . . . . . . . . . . .	DWord	 0000002D CONST	
+L36  . . . . . . . . . . . . . .	DWord	 00000031 CONST	
+L37  . . . . . . . . . . . . . .	DWord	 00000035 CONST	
+L38  . . . . . . . . . . . . . .	DWord	 00000039 CONST	
+L39  . . . . . . . . . . . . . .	Byte	 0000003D CONST	
+L40  . . . . . . . . . . . . . .	Byte	 00000047 CONST	
+L41  . . . . . . . . . . . . . .	Byte	 00000051 CONST	
+L42  . . . . . . . . . . . . . .	Byte	 00000058 CONST	
+L43  . . . . . . . . . . . . . .	Byte	 00000060 CONST	
+L44  . . . . . . . . . . . . . .	DWord	 0000006D CONST	
+L45  . . . . . . . . . . . . . .	DWord	 00000071 CONST	
+L46  . . . . . . . . . . . . . .	Byte	 00000075 CONST	
+L49  . . . . . . . . . . . . . .	Byte	 00000080 CONST	
+L6 . . . . . . . . . . . . . . .	DWord	 00000000 CONST	
+L8 . . . . . . . . . . . . . . .	DWord	 00000004 CONST	
+L9 . . . . . . . . . . . . . . .	DWord	 00000008 CONST	
+bfs  . . . . . . . . . . . . . .	DWord	 00000315 _DATA	
+bte  . . . . . . . . . . . . . .	DWord	 00000319 _DATA	
+k  . . . . . . . . . . . . . . .	DWord	 0000000C _DATA	
+l  . . . . . . . . . . . . . . .	DWord	 00000014 _DATA	
+myArray  . . . . . . . . . . . .	DWord	 00000420 _DATA	
+m  . . . . . . . . . . . . . . .	DWord	 00000010 _DATA	
+saySomethingboo  . . . . . . . .	Byte	 0000031D _DATA	
+sa . . . . . . . . . . . . . . .	Byte	 00000018 _DATA	
+sb . . . . . . . . . . . . . . .	Byte	 00000117 _DATA	
+sc . . . . . . . . . . . . . . .	Byte	 00000216 _DATA	
+sumsadc  . . . . . . . . . . . .	DWord	 0000041C _DATA	
+tmp1 . . . . . . . . . . . . . .	Byte	 00000440 _DATA	
+x  . . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+y  . . . . . . . . . . . . . . .	DWord	 00000004 _DATA	
+z  . . . . . . . . . . . . . . .	DWord	 00000008 _DATA	
+
+	   0 Warnings
+	   0 Errors

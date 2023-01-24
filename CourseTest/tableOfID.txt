@@ -1,0 +1,63 @@
+Литералы: 
+
+ Идентификатор:      Тип данных:  Длина строки:   Первое вхождение:      Значение:
+   L0			INT       -		   22			    8
+   L1			INT       -		   25			    12
+   L2			INT       -		   27			    3
+   L3			INT       -		   29			    10
+   L4			INT       -		   31			    14
+   L5			INT       -		   33			    4
+   L6			INT       -		   35			    9
+   L7			INT       -		   37			    15
+   L8			INT       -		   39			    20
+   L9			INT       -		   99			    1
+   L10			STR       4		   112			   boo,
+   L11			BOO       -		   135			    1
+   L12			BOO       -		   139			    0
+   L13			INT       -		   150			    16
+   L14			INT       -		   160			    13
+   L15			STR       9		   205			   testtext1
+   L16			STR       9		   209			   testtext2
+   L17			STR       6		   212			   concat
+   L18			STR       7		   242			   bool op
+   L19			STR       12		   248			   firstofarray
+   L20			INT       -		   253			    0
+   L21			INT       -		   271			    7
+   L22			STR       10		   300			   maxofarray
+   L23			STR       4		   318			   date
+
+
+
+Функции: 
+
+ Идентификатор:      Тип данных возврата:     Первое вхождение:
+   sum                          INT 			83
+   saySomething                 INT 			104
+   Reverse                      BOO 			125
+
+
+
+Переменные: 
+
+ Имя родительского блока:      Идентификатор:     Тип данных:     Тип идентификатора:    Первое вхождение:
+   sourse                            x                INT               V			3
+   sourse                            y                INT               V			6
+   sourse                            z                INT               V			9
+   sourse                            k                INT               V			12
+   sourse                            m                INT               V			15
+   sourse                            l                INT               V			18
+   sourse                      myArray                INT               A			24
+   sourse                           sa                STR               V			42
+   sourse                           sb                STR               V			45
+   sourse                           sc                STR               V			48
+   sourse                          bfs                BOO               V			51
+   sourse                          bte                BOO               V			54
+   saySomething        saySomethingboo                STR               V			72
+   sum                         sumsadc                INT               V			78
+   sum                            suma                INT               P			86
+   sum                            sumb                INT               P			89
+   saySomething     saySomethingmyname                STR               P			107
+   Reverse                    Reversev                BOO               P			128
+
+
+

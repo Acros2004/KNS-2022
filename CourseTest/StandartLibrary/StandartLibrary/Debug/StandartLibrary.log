@@ -1,0 +1,22 @@
+﻿Сборка начата 16.12.2022 1:13:55.
+Уровень детализации журнала: Normal.     1>Проект "C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\StandartLibrary\StandartLibrary\StandartLibrary.vcxproj" в узле 2 (целевые объекты Rebuild).
+     1>_PrepareForClean:
+         Файл "Debug\StandartLibrary.tlog\StandartLibrary.lastbuildstate" удаляется.
+       InitializeBuildStatus:
+         Создание "Debug\StandartLibrary.tlog\unsuccessfulbuild", так как было задано "AlwaysCreate".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\HostX86\x86\CL.exe /c /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\Debug\StandartLibrary.pdb" /external:W3 /Gd /TP /analyze- /FC /errorReport:prompt StandartLibrary.cpp
+         StandartLibrary.cpp
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\HostX86\x86\Lib.exe /OUT:"C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\Debug\StandartLibrary.lib" /NOLOGO /MACHINE:X86 Debug\StandartLibrary.obj
+         StandartLibrary.vcxproj -> C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\Debug\StandartLibrary.lib
+       FinalizeBuildStatus:
+         Файл "Debug\StandartLibrary.tlog\unsuccessfulbuild" удаляется.
+         Обращение к "Debug\StandartLibrary.tlog\StandartLibrary.lastbuildstate".
+     1>Сборка проекта "C:\Users\noname\Desktop\123\KPO2course\course_project\CourseTest\StandartLibrary\StandartLibrary\StandartLibrary.vcxproj" завершена (целевые объекты Rebuild).
+
+Сборка успешно завершена.
+    Предупреждений: 0
+    Ошибок: 0
+
+Прошло времени 00:00:02.20
